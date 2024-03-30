@@ -96,6 +96,38 @@
   </form>
 </section>
 
+<!-- Adding a new story form -->
+<section class="account-forms-container container">
+  <!-- Login form -->
+  <form
+    action="#"
+    id="new-story-fom"
+    class="account-form hidden"
+    method="post"
+  >
+    <h4>author</h4>
+    <div class="author-input">
+      <label for="author-name">author</label>
+      <input id="author-name" />
+    </div>
+    <div class="story-title">
+      <label for="story-title">title</label>
+      <input
+        id="story-title"
+        type="text"
+      />
+    </div>
+    <div class="story-url">
+      <label for="story-url">url</label>
+      <input
+        id="story-url"
+        type="text"
+      />
+    </div>
+    <button type="submit">submit</button>
+    <hr />
+  </form>
+
 <!-- Library JS & our JS -->
 <script src="https://unpkg.com/jquery"></script>
 <script src="https://unpkg.com/axios/dist/axios.js"></script>
