@@ -14,6 +14,16 @@ function navAllStories(evt) {
 
 $body.on('click', '#nav-all', navAllStories);
 
+// Show submit story form when clicking on navbar
+function submitStoryForm(evt) {
+  console.debug('submitStory', evt);
+  hidePageComponents();
+  $allStoriesList.show();
+  $newStoryForm.show();
+}
+
+$submit.on('click', submitStoryForm);
+
 /** Show login/signup on click on "login" */
 
 function navLoginClick(evt) {
@@ -34,11 +44,3 @@ function updateNavOnLogin() {
   $loggedIn.show();
   $navUserProfile.text(`${currentUser.username}`).show();
 }
-
-function submitStory() {
-  console.debug('submitStory');
-  hidePageComponents();
-  $newStoryForm.show();
-}
-
-$submit.on('click', submitStory);
