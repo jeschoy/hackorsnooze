@@ -17,6 +17,7 @@ const $submit = $('#submit');
 const $myFavorites = $('#my-favorites');
 const $myStories = $('#my-stories');
 const $loggedIn = $('#nav-logged-in');
+const $newStoryForm = $('#new-story-form');
 
 /** To make it easier for individual components to show just themselves, this
  * is a useful function that hides pretty much everything on the page. After
