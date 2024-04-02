@@ -115,10 +115,22 @@ function updateUIOnUserLogin() {
   updateNavOnLogin();
 }
 
+// To add a favorited story to the users favorites in the API
+
+async function addFavorite(story) {
+  const token = currentUser.loginToken;
+  const response = await axios({
+    url: `${BASE_URL}/users/${currentUser.username}/favorites/${story}`,
+    method: 'POST',
+    data: { token },
+  });
+}
+
 // To favorite a story
 function toggleFavorite(evt) {
   const $target = $(evt.target);
-  if ($target.hasClass('fas')) {
+  if ($target.hasClass('far')) {
+    addFavorite($target.closest('li').attr('id'));
     $target.closest('i').toggleClass('fas far');
   } else {
     $target.closest('i').toggleClass('fas far');
