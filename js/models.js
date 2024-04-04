@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const BASE_URL = 'https://hack-or-snooze-v3.herokuapp.com';
+const BASE_URL = "https://hack-or-snooze-v3.herokuapp.com";
 
 /******************************************************************************
  * Story: a single story in the system
@@ -24,7 +24,7 @@ class Story {
 
   getHostName() {
     // UNIMPLEMENTED: complete this function!
-    return 'hostname.com';
+    return "hostname.com";
   }
 }
 
@@ -54,7 +54,7 @@ class StoryList {
     // query the /stories endpoint (no auth required)
     const response = await axios({
       url: `${BASE_URL}/stories`,
-      method: 'GET',
+      method: "GET",
     });
 
     // turn plain old story objects from API into instances of Story class
@@ -76,7 +76,7 @@ class StoryList {
     const token = currentUser.loginToken;
     const response = await axios({
       url: `${BASE_URL}/stories`,
-      method: 'POST',
+      method: "POST",
       data: { token, story: { title, author, url } },
     });
 
@@ -124,7 +124,7 @@ class User {
   static async signup(username, password, name) {
     const response = await axios({
       url: `${BASE_URL}/signup`,
-      method: 'POST',
+      method: "POST",
       data: { user: { username, password, name } },
     });
 
@@ -151,7 +151,7 @@ class User {
   static async login(username, password) {
     const response = await axios({
       url: `${BASE_URL}/login`,
-      method: 'POST',
+      method: "POST",
       data: { user: { username, password } },
     });
 
@@ -177,7 +177,7 @@ class User {
     try {
       const response = await axios({
         url: `${BASE_URL}/users/${username}`,
-        method: 'GET',
+        method: "GET",
         params: { token },
       });
 
@@ -194,8 +194,32 @@ class User {
         token
       );
     } catch (err) {
-      console.error('loginViaStoredCredentials failed', err);
+      console.error("loginViaStoredCredentials failed", err);
       return null;
     }
+  }
+  // To add a favorited story to the users favorites in the API
+
+  async addOrRemoveFavorite(postMethod, story) {
+    const token = this.loginToken;
+    const response = await axios({
+      url: `${BASE_URL}/users/${currentUser.username}/favorites/${story}`,
+      method: postMethod,
+      data: { token },
+    });
+    console.log(postMethod, token);
+  }
+}
+
+// To favorite or unfavorite a story
+function toggleFavorite(evt) {
+  const $target = $(evt.target);
+  console.log($target.closest("li").attr("id"));
+  if ($target.hasClass("far")) {
+    currentUser.addOrRemoveFavorite("POST", $target.closest("li").attr("id"));
+    $target.closest("i").toggleClass("fas far");
+  } else {
+    currentUser.addOrRemoveFavorite("DELETE", $target.closest("li").attr("id"));
+    $target.closest("i").toggleClass("fas far");
   }
 }
