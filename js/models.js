@@ -207,19 +207,6 @@ class User {
       method: postMethod,
       data: { token },
     });
-    console.log(postMethod, token);
-  }
-}
-
-// To favorite or unfavorite a story
-function toggleFavorite(evt) {
-  const $target = $(evt.target);
-  console.log($target.closest("li").attr("id"));
-  if ($target.hasClass("far")) {
-    currentUser.addOrRemoveFavorite("POST", $target.closest("li").attr("id"));
-    $target.closest("i").toggleClass("fas far");
-  } else {
-    currentUser.addOrRemoveFavorite("DELETE", $target.closest("li").attr("id"));
-    $target.closest("i").toggleClass("fas far");
+    console.log(postMethod);
   }
 }
