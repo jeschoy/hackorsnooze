@@ -11,14 +11,13 @@ class Story {
    *   - {title, author, url, username, storyId, createdAt}
    */
 
-  constructor({ storyId, title, author, url, username, createdAt, favorited }) {
+  constructor({ storyId, title, author, url, username, createdAt }) {
     this.storyId = storyId;
     this.title = title;
     this.author = author;
     this.url = url;
     this.username = username;
     this.createdAt = createdAt;
-    this.favorited = false;
   }
 
   /** Parses hostname out of URL and returns it. */
@@ -204,7 +203,7 @@ class User {
   async addOrRemoveFavorite(postMethod, story) {
     const token = this.loginToken;
     const response = await axios({
-      url: `${BASE_URL}/users/${currentUser.username}/favorites/${story}`,
+      url: `${BASE_URL}/users/${currentUser.username}/favorites/${story.storyId}`,
       method: postMethod,
       data: { token },
     });

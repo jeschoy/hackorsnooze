@@ -47,9 +47,17 @@ function updateNavOnLogin() {
 
 // To show favorites page
 function showFavorites() {
-  addFavoritesList();
-  $allStoriesList.hide();
+  showFavoritesList();
+  hidePageComponents();
   $favoritesList.show();
 }
 
+// To show user's stories page
+function showUserStories() {
+  showUserStoriesList();
+  hidePageComponents();
+  $myStoriesList.show();
+}
+
+$myStories.on("click", showUserStories);
 $myFavorites.on("click", showFavorites);

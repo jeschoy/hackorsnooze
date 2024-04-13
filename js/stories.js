@@ -11,6 +11,7 @@ async function getAndShowStoriesOnStart() {
 
   putStoriesOnPage();
   $favoritesList.hide();
+  $myStoriesList.hide();
 }
 
 /**
@@ -49,15 +50,17 @@ function putStoriesOnPage() {
     const $story = generateStoryMarkup(story);
     $allStoriesList.append($story);
   }
+  hidePageComponents();
   $allStoriesList.show();
-  $favoritesList.hide();
+  // $favoritesList.hide();
+  // $myStoriesList.hide();
   $newStoryForm.slideUp();
 }
 
 // To generate star for favorites
 
 function showFavoritesStar(story) {
-  if (currentUser.favorites.length === 0) {
+  if (!currentUser || currentUser.favorites.length === 0) {
     return `<span class="favorite"><i class="fa-star far"></i></span>`;
   } else {
     for (let fav of currentUser.favorites) {
@@ -70,15 +73,31 @@ function showFavoritesStar(story) {
 }
 
 // To show favorites list
-
-function addFavoritesList() {
+function showFavoritesList() {
   console.debug("addFavoritesList");
 
   $favoritesList.empty();
 
-  for (let fav of currentUser.favorites) {
-    const story = generateStoryMarkup(fav);
-    $favoritesList.append(story);
+  if (currentUser.favorites.length === 0) {
+    $favoritesList.append("<h3>No favorites!</3>");
+  } else {
+    for (let fav of currentUser.favorites) {
+      const $story = generateStoryMarkup(fav);
+      $favoritesList.append($story);
+    }
+  }
+  $favoritesList.show();
+}
+
+// To show user's stories
+function showUserStoriesList() {
+  console.debug("addUserStories");
+
+  $myStoriesList.empty();
+
+  for (let myStory of currentUser.ownStories) {
+    const $story = generateStoryMarkup(myStory);
+    $myStoriesList.append($story);
   }
 }
 

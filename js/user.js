@@ -113,6 +113,9 @@ function saveUserCredentialsInLocalStorage() {
 function updateUIOnUserLogin() {
   console.debug("updateUIOnUserLogin");
 
+  hidePageComponents();
+
+  putStoriesOnPage();
   $allStoriesList.show();
 
   updateNavOnLogin();
@@ -121,19 +124,22 @@ function updateUIOnUserLogin() {
 }
 
 // To favorite or unfavorite a story
-function toggleFavorite(evt) {
+async function toggleFavorite(evt) {
   const $target = $(evt.target);
   const storyId = $target.closest("li").attr("id");
-  // const story = storyList.stories.find((s) => s.storyId === storyId);
-  console.log(storyId);
+  const story = storyList.stories.find((s) => s.storyId === storyId);
   if ($target.hasClass("far")) {
-    currentUser.addOrRemoveFavorite("POST", storyId);
+    await currentUser.addOrRemoveFavorite("POST", story);
     $target.closest("i").toggleClass("far fas");
+    currentUser.favorites.push(story);
   } else {
-    currentUser.addOrRemoveFavorite("DELETE", storyId);
+    await currentUser.addOrRemoveFavorite("DELETE", story);
     $target.closest("i").toggleClass("fas far");
+    currentUser.favorites = currentUser.favorites.filter(
+      (s) => s.storyId !== story.storyId
+    );
   }
   return storyId;
 }
 
-$allStoriesList.on("click", ".favorite", toggleFavorite);
+$body.on("click", ".favorite", toggleFavorite);
