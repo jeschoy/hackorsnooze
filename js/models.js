@@ -209,4 +209,13 @@ class User {
     });
     console.log(postMethod);
   }
+
+  async removeStory(story) {
+    const token = this.loginToken;
+    const response = await axios({
+      url: `${BASE_URL}/stories/${story.storyId}`,
+      method: "DELETE",
+      params: { token },
+    });
+  }
 }

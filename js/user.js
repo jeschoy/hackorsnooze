@@ -143,3 +143,18 @@ async function toggleFavorite(evt) {
 }
 
 $body.on("click", ".favorite", toggleFavorite);
+
+// To delete a story from the storylist and ownstories
+$body.on("click", ".delete-btn", async function (e) {
+  const $target = $(e.target);
+  const storyId = $target.closest("li").attr("id");
+  const story = storyList.stories.find((s) => s.storyId === storyId);
+  currentUser.ownStories = currentUser.ownStories.filter(
+    (s) => s.storyId !== story.storyId
+  );
+  storyList.stories = storyList.stories.filter(
+    (s) => s.storyId !== story.storyId
+  );
+  await currentUser.removeStory(story);
+  showUserStories();
+});

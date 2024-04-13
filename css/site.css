@@ -122,3 +122,7 @@ form > hr {
 span > i:hover {
   cursor: pointer;
 }
+
+.delete-btn:hover {
+  cursor: pointer;
+}

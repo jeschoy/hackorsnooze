@@ -95,9 +95,14 @@ function showUserStoriesList() {
 
   $myStoriesList.empty();
 
-  for (let myStory of currentUser.ownStories) {
-    const $story = generateStoryMarkup(myStory);
-    $myStoriesList.append($story);
+  if (currentUser.ownStories.length === 0) {
+    $myStoriesList.append("<h3>No stories! Submit one now!</3>");
+  } else {
+    for (let myStory of currentUser.ownStories) {
+      const $story = generateStoryMarkup(myStory);
+      $story.prepend(`<i class = "fa-regular fa-trash-can delete-btn"></i>`);
+      $myStoriesList.append($story);
+    }
   }
 }
 
@@ -113,6 +118,7 @@ async function addStoriesToPage(evt) {
     author,
     url,
   });
+  $newStoryForm.trigger("reset");
   putStoriesOnPage();
 }
 

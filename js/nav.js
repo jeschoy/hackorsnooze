@@ -19,7 +19,8 @@ function submitStoryForm(evt) {
   console.debug("submitStory", evt);
   hidePageComponents();
   $allStoriesList.show();
-  $newStoryForm.slideDown();
+  // $newStoryForm.slideDown();
+  $newStoryForm.show();
 }
 
 $submit.on("click", submitStoryForm);
