@@ -25,7 +25,7 @@ function generateStoryMarkup(story) {
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
-      <span id="favorite"><i class="fa-star far"></i></span>
+       ${showFavorites(story)}
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -48,9 +48,23 @@ function putStoriesOnPage() {
     const $story = generateStoryMarkup(story);
     $allStoriesList.append($story);
   }
-
   $allStoriesList.show();
-  $newStoryForm.hide();
+  $newStoryForm.slideUp();
+}
+
+// To generate star for favorites
+
+function showFavorites(story) {
+  if (currentUser.favorites.length === 0) {
+    return `<span class="favorite"><i class="fa-star far"></i></span>`;
+  } else {
+    for (let fav of currentUser.favorites) {
+      if (fav.storyId === story.storyId) {
+        return `<span class="favorite"><i class="fa-star fas"></i></span>`;
+      }
+    }
+    return `<span class="favorite"><i class="fa-star far"></i></span>`;
+  }
 }
 
 // For users to add stories to the page

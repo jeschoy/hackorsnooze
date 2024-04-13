@@ -22,6 +22,7 @@ async function login(evt) {
   currentUser = await User.login(username, password);
 
   $loginForm.trigger("reset");
+  $loginForm.hide();
 
   saveUserCredentialsInLocalStorage();
   updateUIOnUserLogin();
@@ -47,6 +48,7 @@ async function signup(evt) {
   updateUIOnUserLogin();
 
   $signupForm.trigger("reset");
+  $signupForm.hide();
 }
 
 $signupForm.on("submit", signup);
@@ -93,6 +95,7 @@ function saveUserCredentialsInLocalStorage() {
   if (currentUser) {
     localStorage.setItem("token", currentUser.loginToken);
     localStorage.setItem("username", currentUser.username);
+    // localStorage.setItem("favorites", currentUser.favorites);
   }
 }
 
@@ -113,25 +116,24 @@ function updateUIOnUserLogin() {
   $allStoriesList.show();
 
   updateNavOnLogin();
+  $signupForm.hide();
+  $loginForm.hide();
 }
 
 // To favorite or unfavorite a story
 function toggleFavorite(evt) {
   const $target = $(evt.target);
-  console.log($target.closest("li").attr("id"));
+  const storyId = $target.closest("li").attr("id");
+  // const story = storyList.stories.find((s) => s.storyId === storyId);
+  console.log(storyId);
   if ($target.hasClass("far")) {
-    currentUser.addOrRemoveFavorite("POST", $target.closest("li").attr("id"));
-    $target.closest("i").toggleClass("fas far");
+    currentUser.addOrRemoveFavorite("POST", storyId);
+    $target.closest("i").toggleClass("far fas");
   } else {
-    currentUser.addOrRemoveFavorite("DELETE", $target.closest("li").attr("id"));
+    currentUser.addOrRemoveFavorite("DELETE", storyId);
     $target.closest("i").toggleClass("fas far");
   }
+  return storyId;
 }
 
-$allStoriesList.on("click", $favorite, toggleFavorite);
-
-// $allStoriesList.on("click", $favorite, function (evt) {
-//   const $target = $(evt.target);
-//   // console.log($target.closest("i").attr("id"));
-//   console.log($target.closest("li").attr("id"));
-// });
+$allStoriesList.on("click", ".favorite", toggleFavorite);
