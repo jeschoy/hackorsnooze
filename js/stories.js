@@ -10,6 +10,7 @@ async function getAndShowStoriesOnStart() {
   $storiesLoadingMsg.remove();
 
   putStoriesOnPage();
+  $favoritesList.hide();
 }
 
 /**
@@ -25,7 +26,7 @@ function generateStoryMarkup(story) {
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
-       ${showFavorites(story)}
+       ${showFavoritesStar(story)}
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -49,12 +50,13 @@ function putStoriesOnPage() {
     $allStoriesList.append($story);
   }
   $allStoriesList.show();
+  $favoritesList.hide();
   $newStoryForm.slideUp();
 }
 
 // To generate star for favorites
 
-function showFavorites(story) {
+function showFavoritesStar(story) {
   if (currentUser.favorites.length === 0) {
     return `<span class="favorite"><i class="fa-star far"></i></span>`;
   } else {
@@ -64,6 +66,19 @@ function showFavorites(story) {
       }
     }
     return `<span class="favorite"><i class="fa-star far"></i></span>`;
+  }
+}
+
+// To show favorites list
+
+function addFavoritesList() {
+  console.debug("addFavoritesList");
+
+  $favoritesList.empty();
+
+  for (let fav of currentUser.favorites) {
+    const story = generateStoryMarkup(fav);
+    $favoritesList.append(story);
   }
 }
 

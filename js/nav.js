@@ -44,3 +44,12 @@ function updateNavOnLogin() {
   $loggedIn.show();
   $navUserProfile.text(`${currentUser.username}`).show();
 }
+
+// To show favorites page
+function showFavorites() {
+  addFavoritesList();
+  $allStoriesList.hide();
+  $favoritesList.show();
+}
+
+$myFavorites.on("click", showFavorites);
